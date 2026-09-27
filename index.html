@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SorrisoCare - Clínica Odontológica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --azul: #1684ff;
+            --azul-forte: #087cff;
+            --fundo: #050b14;
+            --fundo-barra: rgba(3, 11, 22, .90);
+            --barra-h: 112px;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            background-color: var(--fundo);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
+        }
+
+        .container {
+            position: relative;
+            height: 100vh;
+            height: 100dvh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* ==================================================
+           ORBIT NAV — DESKTOP
+        ================================================== */
+
+        .orbit-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: var(--barra-h);
+            width: clamp(190px, 15vw, 230px);
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        .orbit-logo {
+            position: absolute;
+            top: clamp(16px, 2.5vh, 26px);
+            left: clamp(30px, 3vw, 48px);
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            z-index: 10;
+            pointer-events: auto;
+            text-decoration: none;
+        }
+
+        .orbit-logo img {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            filter:
+                drop-shadow(0 0 8px rgba(22,132,255,.3))
+                drop-shadow(0 0 20px rgba(22,132,255,.12));
+            transition: transform .35s ease, filter .35s ease;
+        }
+
+        .orbit-logo:hover img {
+            transform: scale(1.08) rotate(-3deg);
+            filter:
+                drop-shadow(0 0 10px rgba(22,132,255,.7))
+                drop-shadow(0 0 25px rgba(22,132,255,.3));
+        }
+
+        .orbit-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 185px;
+            height: 100%;
+            overflow: visible;
+            pointer-events: none;
+        }
+
+        .orbit-path {
+            fill: none;
+            vector-effect: non-scaling-stroke;
+            stroke-linecap: round;
+        }
+
+        .orbit-path-bg {
+            stroke: rgba(255,255,255,.08);
+            stroke-width: 1;
+        }
+
+        .orbit-path-active {
+            stroke: url(#orbitGradient);
+            stroke-width: 2.4;
+            filter: url(#orbitGlow);
+            stroke-dasharray: 900;
+            stroke-dashoffset: 170;
+            animation: orbitDraw 1.4s cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        @keyframes orbitDraw {
+            from { stroke-dashoffset: 900; opacity: 0; }
+            to   { stroke-dashoffset: 170; opacity: 1; }
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--azul);
+            box-shadow:
+                0 0 0 4px rgba(22,132,255,.08),
+                0 0 16px rgba(22,132,255,.8);
+        }
+
+        .orbit-dot-top {
+            top: 18%;
+            left: 126px;
+        }
+
+        .orbit-item {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            pointer-events: auto;
+            transform: translateY(-50%);
+            transition:
+                transform .35s cubic-bezier(.2,.8,.2,1),
+                opacity .3s ease;
+        }
+
+        .orbit-number {
+            width: 54px;
+            height: 54px;
+            flex: 0 0 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,.23);
+            background: rgba(4,13,25,.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: rgba(255,255,255,.65);
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            transition:
+                background .35s ease,
+                border-color .35s ease,
+                color .35s ease,
+                box-shadow .35s ease,
+                transform .35s ease;
+        }
+
+        .orbit-label {
+            margin-left: 15px;
+            white-space: nowrap;
+            color: rgba(255,255,255,.66);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .4px;
+            text-shadow: 0 2px 8px rgba(0,0,0,.4);
+            transition: color .3s ease, transform .35s ease;
+        }
+
+        .item-01 { top: 30%; left: 63px; }
+        .item-02 { top: 49%; left: 35px; }
+        .item-03 { top: 68%; left: 43px; }
+        .item-04 { top: 86%; left: 70px; }
+
+        .orbit-item.active { z-index: 5; }
+
+        .orbit-item.active .orbit-number {
+            width: 62px;
+            height: 62px;
+            flex-basis: 62px;
+            color: white;
+            background: radial-gradient(circle at 35% 30%,
+                #35a1ff 0%, var(--azul) 42%, #0874ee 100%);
+            border-color: rgba(255,255,255,.8);
+            box-shadow:
+                0 0 0 5px rgba(22,132,255,.10),
+                0 0 24px rgba(22,132,255,.65),
+                inset 0 1px 0 rgba(255,255,255,.45);
+        }
+
+        .orbit-item.active .orbit-label {
+            color: white;
+            margin-left: 12px;
+        }
+
+        .orbit-link-line {
+            width: clamp(45px, 4.5vw, 65px);
+            height: 2px;
+            margin-left: -1px;
+            flex-shrink: 0;
+            background: linear-gradient(90deg, var(--azul), rgba(22,132,255,.35));
+            box-shadow: 0 0 10px rgba(22,132,255,.45);
+        }
+
+        .orbit-item.active::before {
+            content: "";
+            position: absolute;
+            left: -9px;
+            top: 50%;
+            width: 7px;
+            height: 7px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: white;
+            box-shadow:
+                0 0 0 3px var(--azul),
+                0 0 14px rgba(22,132,255,.9);
+        }
+
+        .orbit-item:not(.active):hover { transform: translate(6px, -50%); }
+
+        .orbit-item:not(.active):hover .orbit-number {
+            color: white;
+            border-color: var(--azul);
+            background: rgba(22,132,255,.13);
+            box-shadow:
+                0 0 0 4px rgba(22,132,255,.05),
+                0 0 20px rgba(22,132,255,.25);
+        }
+
+        .orbit-item:not(.active):hover .orbit-label {
+            color: white;
+            transform: translateX(3px);
+        }
+
+        .orbit-tail {
+            position: absolute;
+            left: 157px;
+            top: 94%;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transform: rotate(15deg);
+        }
+
+        .orbit-tail span {
+            width: 4px;
+            height: 4px;
+            display: block;
+            border-radius: 50%;
+            background: var(--azul);
+            box-shadow: 0 0 7px rgba(22,132,255,.7);
+        }
+
+        .orbit-tail span:nth-child(2) { opacity: .5; }
+        .orbit-tail span:nth-child(3) { opacity: .2; }
+
+        /* ==================================================
+           CONTEÚDO PRINCIPAL
+        ================================================== */
+
+        .main-content {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bg-image {
+            position: absolute;
+            inset: 0 0 0 auto;
+            width: 69%;
+            height: calc(100% - var(--barra-h));
+            background-image: url('./inicio.png');
+            background-size: cover;
+            background-position: 52% 56%;
+            background-repeat: no-repeat;
+            z-index: 1;
+            -webkit-mask-image: linear-gradient(to right,
+                transparent 0%, rgba(0,0,0,.08) 10%, black 34%, black 100%);
+            mask-image: linear-gradient(to right,
+                transparent 0%, rgba(0,0,0,.08) 10%, black 34%, black 100%);
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(90deg,
+                var(--fundo) 0%,
+                var(--fundo) 27%,
+                rgba(5,11,20,.92) 35%,
+                rgba(5,11,20,.48) 50%,
+                rgba(5,11,20,.08) 72%,
+                rgba(5,11,20,0) 100%);
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 5;
+            width: min(680px, 48vw);
+            padding-top: clamp(85px, 13vh, 140px);
+            margin-left: clamp(260px, 16vw, 315px);
+        }
+
+        .subtitle {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            color: rgba(255,255,255,.5);
+            margin-bottom: 28px;
+        }
+
+        .subtitle::before {
+            content: "";
+            width: 40px;
+            height: 1px;
+            background: rgba(255,255,255,.7);
+            margin-right: 20px;
+        }
+
+        .subtitle span {
+            color: var(--azul);
+            margin: 0 13px;
+        }
+
+        h1 {
+            font-size: clamp(62px, 6vw, 98px);
+            font-weight: 800;
+            line-height: .88;
+            letter-spacing: -5px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        h1 .blue { color: var(--azul); }
+
+        .description {
+            max-width: 410px;
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.6;
+            color: rgba(255,255,255,.62);
+            margin-bottom: 34px;
+        }
+
+        .cta-button {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: none;
+            border: none;
+            color: white;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .cta-button .icon {
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(255,255,255,.55);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 11px;
+            transition: .3s ease;
+        }
+
+        .cta-button span {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 1.45;
+            letter-spacing: 1.2px;
+        }
+
+        .cta-button:hover .icon {
+            background: var(--azul);
+            border-color: var(--azul);
+            transform: scale(1.07);
+        }
+
+        .hand-note {
+            position: absolute;
+            left: 48%;
+            top: 68%;
+            z-index: 6;
+            color: rgba(255,255,255,.78);
+            font-family: cursive;
+            font-size: 25px;
+            font-style: italic;
+            line-height: 1.05;
+            transform: rotate(-6deg);
+        }
+
+        .hand-note span { display: block; }
+
+        .hand-note::after {
+            content: "";
+            display: block;
+            width: 105px;
+            height: 2px;
+            margin-top: 8px;
+            margin-left: 4px;
+            background: var(--azul);
+            transform: rotate(-5deg);
+        }
+
+        .floating-card {
+            position: absolute;
+            right: 28px;
+            top: 39%;
+            width: 175px;
+            height: 270px;
+            z-index: 7;
+            padding: 0;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 85px 85px 22px 22px;
+            overflow: hidden;
+            background: rgba(255,255,255,.10);
+            box-shadow:
+                0 25px 60px rgba(0,0,0,.25),
+                inset 0 1px 0 rgba(255,255,255,.2);
+        }
+
+        .floating-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            margin: 0;
+            transition: transform .6s ease;
+        }
+
+        .floating-card:hover img { transform: scale(1.05); }
+
+        .floating-card p {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 55px 17px 17px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.35;
+            color: white;
+            background: linear-gradient(transparent, rgba(3,11,22,.92));
+        }
+
+        .card-plus {
+            position: absolute;
+            top: 18px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            z-index: 5;
+            border-radius: 50%;
+            background: rgba(3,11,22,.82);
+            border: 1px solid rgba(255,255,255,.3);
+            color: white;
+            font-size: 20px;
+            backdrop-filter: blur(8px);
+            transition: .3s ease;
+        }
+
+        .floating-card:hover .card-plus {
+            background: var(--azul);
+            transform: rotate(90deg);
+        }
+
+        .bottom-bar {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: var(--barra-h);
+            z-index: 10;
+            display: flex;
+            align-items: stretch;
+            padding: 0;
+            background: var(--fundo-barra);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-top: 1px solid rgba(255,255,255,.12);
+        }
+
+        .schedule-btn {
+            width: 205px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 0 22px;
+            background: var(--azul-forte);
+            border-radius: 0;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 1.5;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .schedule-btn:hover {
+            width: 220px;
+            background: #168cff;
+        }
+
+        /* losango geométrico do CTA */
+        .schedule-mark {
+            width: 6px;
+            height: 6px;
+            border: 1px solid rgba(255,255,255,.9);
+            transform: rotate(45deg);
+            display: inline-block;
+        }
+
+        .schedule-arrow {
+            margin-left: 2px;
+            font-size: 14px;
+        }
+
+        .services-list {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .service-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 0 20px;
+            opacity: .72;
+            color: white;
+            border-right: 1px solid rgba(255,255,255,.10);
+            transition: .35s ease;
+        }
+
+        .service-item:last-child { border-right: none; }
+
+        .service-item:hover {
+            opacity: 1;
+            background: rgba(255,255,255,.035);
+        }
+
+        .service-item .num {
+            flex-shrink: 0;
+            font-size: 34px;
+            font-weight: 300;
+            color: rgba(255,255,255,.17);
+            transition: .3s;
+        }
+
+        .service-item:hover .num { color: var(--azul); }
+
+        .service-item .info strong {
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 1.35;
+            letter-spacing: .3px;
+            color: rgba(255,255,255,.9);
+        }
+
+        .service-item .info span {
+            display: block;
+            margin-top: 6px;
+            font-size: 9px;
+            line-height: 1.35;
+            color: rgba(255,255,255,.42);
+        }
+
+        /* ==================================================
+           CONTROLE DO MENU MOBILE (oculto no desktop)
+        ================================================== */
+
+        .orbit-toggle { display: none; }
+        .orbit-panel { display: none; }
+
+        /* ==================================================
+           TABLET / NOTEBOOK MENOR  (901px – 1250px)
+        ================================================== */
+
+        @media (min-width: 901px) and (max-width: 1250px) {
+            .orbit-nav { width: 175px; }
+            .orbit-line { width: 155px; }
+            .orbit-logo { left: 25px; }
+            .orbit-logo img { width: 46px; height: 46px; }
+
+            .orbit-dot-top { left: 105px; }
+
+            .orbit-number {
+                width: 46px;
+                height: 46px;
+                flex-basis: 46px;
+                font-size: 19px;
+            }
+
+            .orbit-item.active .orbit-number {
+                width: 54px;
+                height: 54px;
+                flex-basis: 54px;
+            }
+
+            .item-01 { left: 51px; }
+            .item-02 { left: 27px; }
+            .item-03 { left: 33px; }
+            .item-04 { left: 55px; }
+
+            .orbit-label { margin-left: 11px; font-size: 8px; }
+            .orbit-link-line { width: 35px; }
+            .orbit-tail { left: 128px; }
+
+            .hero-text {
+                margin-left: 210px;
+                width: min(610px, 50vw);
+            }
+        }
+
+        /* ==================================================
+           TABLET  (701px – 1100px)
+        ================================================== */
+
+        @media (min-width: 701px) and (max-width: 1100px) {
+            :root { --barra-h: 96px; }
+
+            .orbit-nav { width: 160px; }
+            .orbit-line { width: 140px; }
+            .orbit-logo { top: 14px; left: 18px; }
+            .orbit-logo img { width: 44px; height: 44px; }
+
+            .orbit-number {
+                width: 42px;
+                height: 42px;
+                flex-basis: 42px;
+                font-size: 17px;
+            }
+
+            .orbit-item.active .orbit-number {
+                width: 50px;
+                height: 50px;
+                flex-basis: 50px;
+                font-size: 19px;
+            }
+
+            .item-01 { left: 44px; }
+            .item-02 { left: 22px; }
+            .item-03 { left: 28px; }
+            .item-04 { left: 48px; }
+
+            .orbit-label { font-size: 7px; margin-left: 8px; }
+            .orbit-link-line { width: 26px; }
+            .orbit-tail { left: 112px; }
+            .orbit-dot-top { left: 96px; width: 9px; height: 9px; }
+
+            .bg-image { width: 78%; }
+            .hero-text {
+                margin-left: 185px;
+                width: min(520px, 56vw);
+                padding-top: clamp(70px, 11vh, 110px);
+            }
+
+            h1 { font-size: clamp(48px, 5.4vw, 70px); letter-spacing: -3px; }
+
+            .description { font-size: 13px; max-width: 340px; }
+
+            .hand-note {
+                left: 44%;
+                top: 74%;
+                font-size: 20px;
+            }
+
+            .floating-card { display: none; }
+
+            .schedule-btn { width: 170px; font-size: 9px; }
+
+            .service-item { padding: 0 12px; gap: 10px; }
+            .service-item .num { font-size: 26px; }
+            .service-item .info strong { font-size: 9px; }
+            .service-item .info span { display: none; }
+        }
+
+        /* ==================================================
+           REGRA ANTIGA — agora restrita a 701px–1200px
+        ================================================== */
+
+        @media (min-width: 701px) and (max-width: 1200px) {
+            h1 { font-size: 70px; }
+            .floating-card { display: none; }
+            .services-list { gap: 10px; }
+            .service-item .info span { display: none; }
+        }
+
+        /* ==========================================================
+           MOBILE FINAL — SORRISOCARE
+           ========================================================== */
+
+        @media (max-width: 700px) {
+
+            body {
+                overflow: hidden;
+                min-width: 320px;
+            }
+
+            .container,
+            .main-content {
+                width: 100%;
+                height: 100dvh;
+                min-height: 100dvh;
+                overflow: hidden;
+            }
+
+            /* =========================
+               IMAGEM
+               ========================= */
+
+            .bg-image {
+                inset: 0;
+                width: 100%;
+                height: 72%;
+
+                background-size: cover;
+
+                /* joga o rosto mais para direita */
+                background-position: 68% 25%;
+
+                -webkit-mask-image: none;
+                mask-image: none;
+            }
+
+            .overlay {
+                background:
+                    linear-gradient(
+                        90deg,
+                        rgba(5,11,20,.72) 0%,
+                        rgba(5,11,20,.44) 48%,
+                        rgba(5,11,20,.15) 100%
+                    ),
+                    linear-gradient(
+                        180deg,
+                        rgba(5,11,20,.18) 0%,
+                        rgba(5,11,20,.28) 30%,
+                        rgba(5,11,20,.72) 56%,
+                        #050b14 76%,
+                        #050b14 100%
+                    );
+            }
+
+            /* =========================
+               TOPO
+               ========================= */
+
+            .orbit-logo {
+                top: calc(15px + var(--safe-top));
+                left: 18px;
+
+                width: 40px;
+                height: 40px;
+            }
+
+            .orbit-logo img {
+                width: 38px;
+                height: 38px;
+            }
+
+            .orbit-toggle {
+                top: calc(14px + var(--safe-top));
+                right: 18px;
+
+                width: 48px;
+                height: 48px;
+
+                font-size: 17px;
+            }
+
+            /* pequeno detalhe orbital saindo do 01 */
+
+            .orbit-toggle::before {
+                content: "";
+
+                position: absolute;
+
+                right: 42px;
+                top: 50%;
+
+                width: 26px;
+                height: 1px;
+
+                background:
+                    linear-gradient(
+                        90deg,
+                        transparent,
+                        rgba(22,132,255,.9)
+                    );
+
+                box-shadow: 0 0 8px rgba(22,132,255,.55);
+
+                transform: translateY(-50%);
+            }
+
+            /* =========================
+               HERO
+               ========================= */
+
+            .hero-text {
+                width: 100%;
+                margin: 0;
+
+                padding:
+                    calc(112px + var(--safe-top))
+                    20px
+                    0;
+
+                z-index: 8;
+            }
+
+            .subtitle {
+                width: 100%;
+
+                font-size: 8px;
+                letter-spacing: 3px;
+
+                margin-bottom: 18px;
+
+                white-space: nowrap;
+            }
+
+            .subtitle::before {
+                width: 27px;
+                margin-right: 11px;
+            }
+
+            .subtitle span {
+                margin: 0 7px;
+            }
+
+            /* =========================
+               TÍTULO
+               ========================= */
+
+            .hero-text h1 {
+                width: 100%;
+                max-width: 100%;
+
+                font-size: clamp(39px, 11.3vw, 54px);
+
+                line-height: .91;
+                letter-spacing: -2.4px;
+
+                margin: 0 0 20px;
+
+                overflow: visible;
+            }
+
+            .hero-text h1 .blue {
+                display: inline-block;
+                white-space: nowrap;
+            }
+
+            /* =========================
+               TEXTO
+               ========================= */
+
+            .description {
+                width: min(76%, 310px);
+                max-width: 310px;
+
+                font-size: 12.5px;
+                line-height: 1.55;
+
+                color: rgba(255,255,255,.68);
+
+                margin-bottom: 22px;
+            }
+
+            /* =========================
+               CONHEÇA A CLÍNICA
+               ========================= */
+
+            .cta-button {
+                gap: 15px;
+            }
+
+            .cta-button .icon {
+                width: 46px;
+                height: 46px;
+                flex: 0 0 46px;
+            }
+
+            .cta-button span {
+                font-size: 9.5px;
+                line-height: 1.35;
+                letter-spacing: 1px;
+            }
+
+            /* =========================
+               SORRIA SEM LIMITES
+               ========================= */
+
+            .hand-note {
+                display: block;
+
+                left: auto;
+                right: 24px;
+
+                top: auto;
+
+                bottom: 190px;
+
+                font-size: 18px;
+                line-height: 1;
+
+                z-index: 9;
+
+                transform: rotate(-7deg);
+            }
+
+            .hand-note::after {
+                width: 76px;
+                height: 2px;
+
+                margin-top: 7px;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            /* =========================
+               ÁREA INFERIOR
+               ========================= */
+
+            .bottom-bar {
+                position: fixed;
+
+                left: 0;
+                right: 0;
+                bottom: 0;
+
+                width: 100%;
+                height: 158px;
+
+                display: flex;
+                flex-direction: column;
+
+                padding: 0 0 var(--safe-bottom);
+
+                background: rgba(3,11,22,.97);
+
+                border-top:
+                    1px solid rgba(255,255,255,.10);
+
+                z-index: 20;
+            }
+
+            .schedule-btn {
+                position: relative;
+
+                width: 100%;
+                height: 50px;
+                min-height: 50px;
+
+                padding: 0 20px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 1.3px;
+
+                background:
+                    linear-gradient(
+                        90deg,
+                        #087cff,
+                        #168cff
+                    );
+
+                overflow: hidden;
+            }
+
+            .schedule-btn::before {
+                content: "";
+
+                position: absolute;
+
+                left: 0;
+                top: 0;
+
+                width: 55px;
+                height: 1px;
+
+                background: rgba(255,255,255,.75);
+            }
+
+            .schedule-btn:hover {
+                width: 100%;
+            }
+
+            /* =========================
+               TRATAMENTOS / CARROSSEL
+               ========================= */
+
+            .services-list {
+                flex: 1;
+
+                display: flex;
+
+                width: 100%;
+
+                overflow-x: auto;
+                overflow-y: hidden;
+
+                gap: 0;
+
+                padding: 0;
+
+                scroll-snap-type: x mandatory;
+                scrollbar-width: none;
+
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .services-list::-webkit-scrollbar {
+                display: none;
+            }
+
+            .service-item {
+                flex: 0 0 82%;
+
+                min-width: 82%;
+
+                height: 108px;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                gap: 14px;
+
+                padding: 0 16px;
+
+                scroll-snap-align: start;
+
+                border-right:
+                    1px solid rgba(255,255,255,.09);
+
+                background: transparent;
+
+                opacity: 1;
+            }
+
+            .service-item .num {
+                flex: 0 0 auto;
+
+                font-size: 27px;
+                font-weight: 300;
+
+                color: rgba(22,132,255,.72);
+            }
+
+            .service-item .info {
+                min-width: 0;
+            }
+
+            .service-item .info strong {
+                display: block;
+
+                font-size: 9.5px;
+                line-height: 1.3;
+
+                letter-spacing: .2px;
+
+                white-space: normal;
+            }
+
+            .service-item .info span {
+                display: block;
+
+                margin-top: 5px;
+
+                font-size: 8.5px;
+                line-height: 1.35;
+
+                color: rgba(255,255,255,.4);
+            }
+        }
+
+        /* ==========================================================
+           CELULARES PEQUENOS
+           ========================================================== */
+
+        @media (max-width: 370px) {
+
+            .hero-text {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .hero-text h1 {
+                font-size: clamp(36px, 11vw, 41px);
+                letter-spacing: -2px;
+            }
+
+            .subtitle {
+                font-size: 7px;
+                letter-spacing: 2.4px;
+            }
+
+            .subtitle span {
+                margin: 0 5px;
+            }
+
+            .description {
+                font-size: 11.5px;
+            }
+
+            .hand-note {
+                right: 17px;
+                font-size: 16px;
+            }
+        }
+
+        /* ==================================================
+           MOBILE — MENU ORBITAL (painel)
+        ================================================== */
+
+        @media (max-width: 700px) {
+
+            .orbit-nav {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: auto;
+                width: 100%;
+                height: auto;
+                z-index: 40;
+                pointer-events: none;
+            }
+
+            .orbit-line,
+            .orbit-dot,
+            .orbit-item,
+            .orbit-tail {
+                display: none;
+            }
+
+            .orbit-toggle {
+                display: grid;
+                place-items: center;
+
+                position: absolute;
+                top: calc(14px + var(--safe-top));
+                right: 18px;
+
+                width: 48px;
+                height: 48px;
+
+                z-index: 60;
+
+                border-radius: 50%;
+                border: 2px solid rgba(255,255,255,.28);
+                background: rgba(4,13,25,.88);
+
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+
+                color: white;
+                font-size: 17px;
+                font-weight: 700;
+                letter-spacing: -1px;
+
+                cursor: pointer;
+                pointer-events: auto;
+
+                box-shadow:
+                    0 0 0 4px rgba(22,132,255,.08),
+                    0 0 22px rgba(22,132,255,.35);
+
+                transition: transform .35s ease, background .35s ease;
+            }
+
+            .orbit-toggle::after {
+                content: "";
+                position: absolute;
+                inset: -6px;
+                border-radius: 50%;
+                border: 1px dashed rgba(22,132,255,.35);
+                animation: girar 14s linear infinite;
+            }
+
+            @keyframes girar {
+                to { transform: rotate(360deg); }
+            }
+
+            .orbit-toggle.open {
+                background: radial-gradient(circle at 35% 30%,
+                    #35a1ff 0%, var(--azul) 45%, #0874ee 100%);
+                border-color: rgba(255,255,255,.8);
+                box-shadow:
+                    0 0 0 5px rgba(22,132,255,.14),
+                    0 0 28px rgba(22,132,255,.7);
+            }
+
+            .orbit-panel {
+                position: fixed;
+                inset: 0;
+                z-index: 55;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                padding: 90px 32px calc(40px + var(--safe-bottom));
+
+                background:
+                    radial-gradient(circle at 85% 8%,
+                        rgba(22,132,255,.22), transparent 42%),
+                    radial-gradient(circle at 10% 90%,
+                        rgba(22,132,255,.16), transparent 45%),
+                    rgba(3,8,16,.96);
+
+                backdrop-filter: blur(22px);
+                -webkit-backdrop-filter: blur(22px);
+
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-8px);
+
+                transition:
+                    opacity .35s ease,
+                    transform .45s cubic-bezier(.2,.8,.2,1),
+                    visibility .35s;
+
+                pointer-events: none;
+                overflow: hidden;
+            }
+
+            .orbit-panel.open {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .orbit-panel-curve {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: visible;
+            }
+
+            .orbit-panel-curve path {
+                fill: none;
+                stroke: url(#orbitGradientMobile);
+                stroke-width: 2.4;
+                stroke-linecap: round;
+                filter: url(#orbitGlowMobile);
+                stroke-dasharray: 900;
+                stroke-dashoffset: 900;
+            }
+
+            .orbit-panel.open .orbit-panel-curve path {
+                animation: orbitDrawMobile 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+            }
+
+            @keyframes orbitDrawMobile {
+                to { stroke-dashoffset: 150; }
+            }
+
+            .orbit-panel-inner {
+                position: relative;
+                z-index: 2;
+
+                display: flex;
+                flex-direction: column;
+                gap: 22px;
+            }
+
+            .menu-item {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                color: white;
+                text-decoration: none;
+
+                transform: translateY(14px);
+                opacity: 0;
+
+                transition:
+                    transform .5s cubic-bezier(.2,.8,.2,1),
+                    opacity .4s ease;
+            }
+
+            .orbit-panel.open .menu-item {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .orbit-panel.open .menu-item:nth-child(1) { transition-delay: .12s; }
+            .orbit-panel.open .menu-item:nth-child(2) { transition-delay: .20s; }
+            .orbit-panel.open .menu-item:nth-child(3) { transition-delay: .28s; }
+            .orbit-panel.open .menu-item:nth-child(4) { transition-delay: .36s; }
+
+            .menu-number {
+                width: 52px;
+                height: 52px;
+                flex: 0 0 52px;
+
+                display: grid;
+                place-items: center;
+
+                border-radius: 50%;
+                border: 2px solid rgba(255,255,255,.25);
+
+                background: rgba(4,13,25,.85);
+
+                color: rgba(255,255,255,.7);
+
+                font-size: 20px;
+                font-weight: 700;
+                letter-spacing: -1px;
+
+                transition: .35s ease;
+            }
+
+            .menu-item.active .menu-number {
+                color: white;
+
+                background: radial-gradient(circle at 35% 30%,
+                    #35a1ff 0%, var(--azul) 45%, #0874ee 100%);
+
+                border-color: rgba(255,255,255,.8);
+
+                box-shadow:
+                    0 0 0 5px rgba(22,132,255,.12),
+                    0 0 26px rgba(22,132,255,.65),
+                    inset 0 1px 0 rgba(255,255,255,.4);
+            }
+
+            .menu-line {
+                flex: 1;
+                height: 2px;
+
+                background: linear-gradient(90deg,
+                    var(--azul), rgba(22,132,255,.25));
+
+                box-shadow: 0 0 10px rgba(22,132,255,.45);
+
+                transform-origin: left center;
+                transform: scaleX(.9);
+                opacity: .8;
+            }
+
+            .menu-label {
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 2px;
+                color: rgba(255,255,255,.78);
+            }
+
+            .menu-item.active .menu-label { color: white; }
+
+            .orbit-close {
+                position: absolute;
+                left: 50%;
+                bottom: calc(28px + var(--safe-bottom));
+                transform: translateX(-50%);
+
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                padding: 12px 22px;
+                border-radius: 999px;
+
+                border: 1px solid rgba(255,255,255,.28);
+                background: rgba(4,13,25,.7);
+
+                color: rgba(255,255,255,.8);
+
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 2px;
+
+                cursor: pointer;
+                pointer-events: auto;
+
+                transition: .3s ease;
+            }
+
+            .orbit-close:hover {
+                background: var(--azul);
+                border-color: var(--azul);
+                color: white;
+            }
+        }
+
+        /* ==================================================
+           TELAS BAIXAS (mobile landscape)
+        ================================================== */
+
+        @media (max-width: 900px) and (max-height: 520px) {
+            .hero-text {
+                padding-top: calc(84px + var(--safe-top));
+            }
+
+            h1 { font-size: clamp(34px, 9vw, 46px); }
+            .description { display: none; }
+            .hand-note { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- NAV ORBITAL -->
+        <nav class="orbit-nav">
+
+            <a href="index.html" class="orbit-logo">
+                <img src="./logo.png" alt="SorrisoCare">
+            </a>
+
+            <svg
+                class="orbit-line"
+                viewBox="0 0 190 720"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+            >
+                <defs>
+                    <linearGradient id="orbitGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#1684ff"/>
+                        <stop offset="70%" stop-color="#1684ff"/>
+                        <stop offset="100%" stop-color="#1684ff" stop-opacity="0"/>
+                    </linearGradient>
+
+                    <filter id="orbitGlow">
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <path
+                    class="orbit-path orbit-path-bg"
+                    d="M120 -30
+                       C155 70 150 125 108 185
+                       C58 255 40 335 55 410
+                       C67 475 95 535 132 590
+                       C150 617 162 645 172 690"
+                />
+
+                <path
+                    class="orbit-path orbit-path-active"
+                    d="M120 -30
+                       C155 70 150 125 108 185
+                       C58 255 40 335 55 410
+                       C67 475 95 535 132 590
+                       C150 617 162 645 172 690"
+                />
+            </svg>
+
+            <span class="orbit-dot orbit-dot-top"></span>
+
+            <a href="index.html" class="orbit-item item-01 active">
+                <span class="orbit-number">01</span>
+                <span class="orbit-link-line"></span>
+                <span class="orbit-label">INÍCIO</span>
+            </a>
+
+            <a href="sobre.html" class="orbit-item item-02">
+                <span class="orbit-number">02</span>
+                <span class="orbit-label">SOBRE</span>
+            </a>
+
+            <a href="tratamentos.html" class="orbit-item item-03">
+                <span class="orbit-number">03</span>
+                <span class="orbit-label">TRATAMENTOS</span>
+            </a>
+
+            <a href="contato.html" class="orbit-item item-04">
+                <span class="orbit-number">04</span>
+                <span class="orbit-label">CONTATO</span>
+            </a>
+
+            <div class="orbit-tail">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </nav>
+
+        <!-- BOTÃO MOBILE 01 (gatilho do menu) -->
+        <button class="orbit-toggle" id="orbitToggle" aria-label="Abrir menu" aria-expanded="false">
+            01
+        </button>
+
+        <!-- PAINEL DA ÓRBITA MOBILE -->
+        <div class="orbit-panel" id="orbitPanel" aria-hidden="true">
+
+            <svg class="orbit-panel-curve" viewBox="0 0 390 780" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                    <linearGradient id="orbitGradientMobile" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#1684ff"/>
+                        <stop offset="72%" stop-color="#1684ff"/>
+                        <stop offset="100%" stop-color="#1684ff" stop-opacity="0"/>
+                    </linearGradient>
+
+                    <filter id="orbitGlowMobile">
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <path
+                    d="M300 -40
+                       C360 120 330 210 240 300
+                       C150 390 90 480 130 590
+                       C160 670 210 720 260 790"
+                    stroke="url(#orbitGradientMobile)"
+                    filter="url(#orbitGlowMobile)"
+                />
+            </svg>
+
+            <div class="orbit-panel-inner">
+                <a href="index.html" class="menu-item active">
+                    <span class="menu-number">01</span>
+                    <span class="menu-line"></span>
+                    <span class="menu-label">INÍCIO</span>
+                </a>
+
+                <a href="sobre.html" class="menu-item">
+                    <span class="menu-number">02</span>
+                    <span class="menu-line"></span>
+                    <span class="menu-label">SOBRE</span>
+                </a>
+
+                <a href="tratamentos.html" class="menu-item">
+                    <span class="menu-number">03</span>
+                    <span class="menu-line"></span>
+                    <span class="menu-label">TRATAMENTOS</span>
+                </a>
+
+                <a href="contato.html" class="menu-item">
+                    <span class="menu-number">04</span>
+                    <span class="menu-line"></span>
+                    <span class="menu-label">CONTATO</span>
+                </a>
+            </div>
+
+            <button class="orbit-close" id="orbitClose" aria-label="Fechar menu">
+                FECHAR ×
+            </button>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <div class="bg-image"></div>
+            <div class="overlay"></div>
+
+            <div class="hero-text">
+                <div class="subtitle">
+                    SAÚDE <span>•</span> ESTÉTICA <span>•</span> BEM-ESTAR
+                </div>
+                <h1>
+                    SORRISO<br>
+                    É SOBRE<br>
+                    <span class="blue">CONFIANÇA.</span>
+                </h1>
+                <p class="description">
+                    Mais que um tratamento, é cuidar de você em todas as fases da sua vida.
+                </p>
+                <button class="cta-button">
+                    <div class="icon">▶</div>
+                    <span>CONHEÇA<br>NOSSA CLÍNICA</span>
+                </button>
+            </div>
+
+            <div class="hand-note">
+                <span>Sorria</span>
+                <span>sem limites.</span>
+            </div>
+
+            <div class="floating-card">
+                <div class="card-plus">+</div>
+                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=400&auto=format&fit=crop" alt="Clínica Moderna">
+                <p>Ambiente moderno e acolhedor.</p>
+            </div>
+
+            <div class="bottom-bar">
+                <div class="schedule-btn">
+                    <span class="schedule-mark"></span>
+                    AGENDAR AVALIAÇÃO
+                    <span class="schedule-arrow">→</span>
+                </div>
+                <div class="services-list">
+                    <div class="service-item">
+                        <span class="num">01</span>
+                        <div class="info">
+                            <strong>CLAREAMENTO DENTAL</strong>
+                            <span>Um sorriso mais branco e confiante.</span>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <span class="num">02</span>
+                        <div class="info">
+                            <strong>ORTODONTIA (ALINHADORES)</strong>
+                            <span>Mais liberdade para o seu sorriso.</span>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <span class="num">03</span>
+                        <div class="info">
+                            <strong>IMPLANTES DENTÁRIOS</strong>
+                            <span>Segurança e qualidade de vida.</span>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <span class="num">04</span>
+                        <div class="info">
+                            <strong>ESTÉTICA DENTAL</strong>
+                            <span>Harmonia e beleza para o seu sorriso.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            var toggle = document.getElementById('orbitToggle');
+            var panel = document.getElementById('orbitPanel');
+            var close = document.getElementById('orbitClose');
+
+            function abrirMenu() {
+                panel.classList.add('open');
+                toggle.classList.add('open');
+                toggle.setAttribute('aria-expanded', 'true');
+                panel.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function fecharMenu() {
+                panel.classList.remove('open');
+                toggle.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                panel.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            toggle.addEventListener('click', function () {
+                if (panel.classList.contains('open')) {
+                    fecharMenu();
+                } else {
+                    abrirMenu();
+                }
+            });
+
+            close.addEventListener('click', fecharMenu);
+
+            panel.addEventListener('click', function (e) {
+                if (e.target === panel) fecharMenu();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') fecharMenu();
+            });
+        })();
+    </script>
+
+</body>
+</html>
