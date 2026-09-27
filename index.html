@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SorrisoCare - Clínica Odontológica</title>
+    <title>Veyra — Clínica Odontológica</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -326,27 +326,78 @@
             margin-left: clamp(260px, 16vw, 315px);
         }
 
-        .subtitle {
+        /* ==================================================
+           ASSINATURA DE MARCA — VEYRA
+        ================================================== */
+
+        .brand-signature {
             display: flex;
             align-items: center;
-            font-size: 11px;
-            font-weight: 400;
-            letter-spacing: 5px;
-            color: rgba(255,255,255,.5);
-            margin-bottom: 28px;
+            gap: 11px;
+
+            margin-bottom: 24px;
+
+            font-size: 9px;
+            line-height: 1;
+            letter-spacing: 1.8px;
+
+            white-space: nowrap;
         }
 
-        .subtitle::before {
+        .brand-signature::before {
+            display: none;
+        }
+
+        .brand-signature strong {
+            position: relative;
+
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .brand-signature strong sup {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+
+            font-size: 5px;
+            color: #1684ff;
+
+            text-shadow: 0 0 7px rgba(22,132,255,.8);
+        }
+
+        .brand-signature strong::after {
             content: "";
-            width: 40px;
+
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+
+            width: 18px;
             height: 1px;
-            background: rgba(255,255,255,.7);
-            margin-right: 20px;
+
+            background: #1684ff;
+
+            box-shadow: 0 0 6px rgba(22,132,255,.65);
         }
 
-        .subtitle span {
-            color: var(--azul);
-            margin: 0 13px;
+        .brand-signature > span {
+            margin: 0 2px;
+
+            color: #1684ff;
+            font-weight: 300;
+
+            opacity: .8;
+        }
+
+        .brand-signature em {
+            color: rgba(255,255,255,.52);
+
+            font-style: normal;
+            font-weight: 400;
+
+            letter-spacing: 2.5px;
         }
 
         h1 {
@@ -369,40 +420,115 @@
             margin-bottom: 34px;
         }
 
+        /* ==================================================
+           CTA ORBITAL — botão cortado
+        ================================================== */
+
         .cta-button {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 16px;
+
             background: none;
-            border: none;
+            border: 0;
             color: white;
+
             padding: 0;
             cursor: pointer;
         }
 
         .cta-button .icon {
-            width: 52px;
-            height: 52px;
-            border: 1px solid rgba(255,255,255,.55);
-            border-radius: 50%;
+            position: relative;
+
+            width: 72px;
+            height: 46px;
+
             display: grid;
             place-items: center;
-            font-size: 11px;
-            transition: .3s ease;
+
+            border: 1px solid rgba(255,255,255,.38);
+            border-radius: 24px 9px 24px 9px;
+
+            background: rgba(5,11,20,.18);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            font-size: 0;
+
+            transition:
+                width .35s cubic-bezier(.2,.8,.2,1),
+                background .3s ease,
+                border-color .3s ease;
         }
 
-        .cta-button span {
+        .cta-button .icon::after {
+            content: "→";
+
+            font-size: 18px;
+            font-weight: 300;
+
+            color: white;
+
+            transition: transform .35s ease;
+        }
+
+        .cta-button .icon::before {
+            content: "";
+
+            position: absolute;
+            left: -22px;
+            top: 50%;
+
+            width: 22px;
+            height: 1px;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #1684ff
+            );
+
+            box-shadow: 0 0 8px rgba(22,132,255,.7);
+        }
+
+        .cta-button > span {
             text-align: left;
-            font-size: 11px;
-            font-weight: 500;
-            line-height: 1.45;
-            letter-spacing: 1.2px;
+
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 1.35;
+
+            letter-spacing: 1.1px;
+        }
+
+        .cta-button > span::before {
+            content: "";
+
+            display: inline-block;
+
+            width: 4px;
+            height: 4px;
+
+            margin-right: 7px;
+            margin-bottom: 2px;
+
+            border-radius: 50%;
+
+            background: #1684ff;
+
+            box-shadow: 0 0 8px #1684ff;
         }
 
         .cta-button:hover .icon {
-            background: var(--azul);
-            border-color: var(--azul);
-            transform: scale(1.07);
+            width: 82px;
+
+            background: rgba(22,132,255,.13);
+            border-color: #1684ff;
+        }
+
+        .cta-button:hover .icon::after {
+            transform: translateX(4px);
         }
 
         .hand-note {
@@ -534,7 +660,6 @@
             background: #168cff;
         }
 
-        /* losango geométrico do CTA */
         .schedule-mark {
             width: 6px;
             height: 6px;
@@ -602,7 +727,7 @@
         }
 
         /* ==================================================
-           CONTROLE DO MENU MOBILE (oculto no desktop)
+           CONTROLE DO MENU MOBILE
         ================================================== */
 
         .orbit-toggle { display: none; }
@@ -712,7 +837,7 @@
         }
 
         /* ==================================================
-           REGRA ANTIGA — agora restrita a 701px–1200px
+           REGRA ANTIGA — restrita a 701px–1200px
         ================================================== */
 
         @media (min-width: 701px) and (max-width: 1200px) {
@@ -723,7 +848,7 @@
         }
 
         /* ==========================================================
-           MOBILE FINAL — SORRISOCARE
+           MOBILE FINAL — VEYRA
            ========================================================== */
 
         @media (max-width: 700px) {
@@ -741,18 +866,12 @@
                 overflow: hidden;
             }
 
-            /* =========================
-               IMAGEM
-               ========================= */
-
             .bg-image {
                 inset: 0;
                 width: 100%;
                 height: 72%;
 
                 background-size: cover;
-
-                /* joga o rosto mais para direita */
                 background-position: 68% 25%;
 
                 -webkit-mask-image: none;
@@ -777,10 +896,6 @@
                     );
             }
 
-            /* =========================
-               TOPO
-               ========================= */
-
             .orbit-logo {
                 top: calc(15px + var(--safe-top));
                 left: 18px;
@@ -803,8 +918,6 @@
 
                 font-size: 17px;
             }
-
-            /* pequeno detalhe orbital saindo do 01 */
 
             .orbit-toggle::before {
                 content: "";
@@ -829,10 +942,6 @@
                 transform: translateY(-50%);
             }
 
-            /* =========================
-               HERO
-               ========================= */
-
             .hero-text {
                 width: 100%;
                 margin: 0;
@@ -845,29 +954,26 @@
                 z-index: 8;
             }
 
-            .subtitle {
-                width: 100%;
-
-                font-size: 8px;
-                letter-spacing: 3px;
-
-                margin-bottom: 18px;
-
-                white-space: nowrap;
+            /* assinatura de marca no mobile */
+            .brand-signature {
+                gap: 8px;
+                margin-bottom: 19px;
+                font-size: 7px;
+                letter-spacing: 1.2px;
             }
 
-            .subtitle::before {
-                width: 27px;
-                margin-right: 11px;
+            .brand-signature strong {
+                letter-spacing: 1.4px;
             }
 
-            .subtitle span {
-                margin: 0 7px;
+            .brand-signature em {
+                letter-spacing: 1.3px;
             }
 
-            /* =========================
-               TÍTULO
-               ========================= */
+            .brand-signature strong::after {
+                width: 14px;
+                bottom: -6px;
+            }
 
             .hero-text h1 {
                 width: 100%;
@@ -888,10 +994,6 @@
                 white-space: nowrap;
             }
 
-            /* =========================
-               TEXTO
-               ========================= */
-
             .description {
                 width: min(76%, 310px);
                 max-width: 310px;
@@ -904,29 +1006,25 @@
                 margin-bottom: 22px;
             }
 
-            /* =========================
-               CONHEÇA A CLÍNICA
-               ========================= */
-
             .cta-button {
-                gap: 15px;
+                gap: 14px;
             }
 
             .cta-button .icon {
-                width: 46px;
-                height: 46px;
-                flex: 0 0 46px;
+                width: 64px;
+                height: 44px;
+                border-radius: 22px 8px 22px 8px;
             }
 
-            .cta-button span {
-                font-size: 9.5px;
+            .cta-button:hover .icon {
+                width: 72px;
+            }
+
+            .cta-button > span {
+                font-size: 10px;
                 line-height: 1.35;
-                letter-spacing: 1px;
+                letter-spacing: 1.1px;
             }
-
-            /* =========================
-               SORRIA SEM LIMITES
-               ========================= */
 
             .hand-note {
                 display: block;
@@ -956,10 +1054,6 @@
             .floating-card {
                 display: none;
             }
-
-            /* =========================
-               ÁREA INFERIOR
-               ========================= */
 
             .bottom-bar {
                 position: fixed;
@@ -1028,10 +1122,6 @@
             .schedule-btn:hover {
                 width: 100%;
             }
-
-            /* =========================
-               TRATAMENTOS / CARROSSEL
-               ========================= */
 
             .services-list {
                 flex: 1;
@@ -1134,13 +1224,9 @@
                 letter-spacing: -2px;
             }
 
-            .subtitle {
-                font-size: 7px;
-                letter-spacing: 2.4px;
-            }
-
-            .subtitle span {
-                margin: 0 5px;
+            .brand-signature {
+                font-size: 6.5px;
+                letter-spacing: 1px;
             }
 
             .description {
@@ -1151,10 +1237,15 @@
                 right: 17px;
                 font-size: 16px;
             }
+
+            .cta-button .icon {
+                width: 58px;
+                height: 42px;
+            }
         }
 
         /* ==================================================
-           MOBILE — MENU ORBITAL (painel)
+           MOBILE — MENU ORBITAL
         ================================================== */
 
         @media (max-width: 700px) {
@@ -1456,7 +1547,7 @@
         <nav class="orbit-nav">
 
             <a href="index.html" class="orbit-logo">
-                <img src="./logo.png" alt="SorrisoCare">
+                <img src="./logo.png" alt="Veyra">
             </a>
 
             <svg
@@ -1531,7 +1622,7 @@
 
         </nav>
 
-        <!-- BOTÃO MOBILE 01 (gatilho do menu) -->
+        <!-- BOTÃO MOBILE 01 -->
         <button class="orbit-toggle" id="orbitToggle" aria-label="Abrir menu" aria-expanded="false">
             01
         </button>
@@ -1603,9 +1694,12 @@
             <div class="overlay"></div>
 
             <div class="hero-text">
-                <div class="subtitle">
-                    SAÚDE <span>•</span> ESTÉTICA <span>•</span> BEM-ESTAR
+                <div class="subtitle brand-signature">
+                    <strong>VEYRA<sup>®</sup></strong>
+                    <span>/</span>
+                    <em>ODONTOLOGIA CONTEMPORÂNEA</em>
                 </div>
+
                 <h1>
                     SORRISO<br>
                     É SOBRE<br>
